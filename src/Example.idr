@@ -24,7 +24,7 @@ strSTLC = MkStrength
   { strength = \p,x,mon => \case
     (App f x) => \theta => App (f theta) (x theta)
     (Lam str {ty1} body) => \theta =>
-        Lam str $ body $ extend p (mon.var (%% str))
+        Lam str $ body $ p.extend (mon.var (%% str))
       $ \v => mon.ren (theta v)
                       (\u => ThereVar u) -- Bug: can't eta-reduce
   }

@@ -19,6 +19,11 @@ data (.Erased) : type.Ctx -> Type where
   S : ctx.Erased -> (ctx :< x).Erased
 
 public export
+(.toNat) : ctx.Erased -> Nat
+(Z).toNat = 0
+(S length).toNat = S length.toNat
+
+public export
 (++) : (ctx1,ctx2 : type.Ctx) -> type.Ctx
 ctx1 ++ [<] = ctx1
 ctx1 ++ (ctx2 :< ty) = (ctx1 ++ ctx2) :< ty
