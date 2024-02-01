@@ -17,6 +17,13 @@ depends = contrib
 
 -- modules to install
 modules = SOAS
+    , SOAS.Algebra
+    , SOAS.Context
+    , SOAS.Family
+    , SOAS.Strength
+    , SOAS.Structure
+    , SOAS.Theory
+    , SOAS.Var
 
 -- main file (i.e. file to load at REPL)
 -- main =
