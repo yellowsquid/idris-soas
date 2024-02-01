@@ -14,22 +14,14 @@ record (.Initial)
          (a : type.SortedFamily) where
   constructor MkInitial
   metalg : signature.MetaAlg meta a
-  bang :
+  sem :
     (0 b : type.SortedFamily) ->
-    (metalg : signature.MetaAlg meta b) ->
+    (metalg : signature.MetaAlg meta b) =>
     a -|> b
-
-public export
-(.sem) :
-  signature .Initial meta a ->
-  (0 b : type.SortedFamily) -> (metalg : signature.MetaAlg meta b) =>
-  a -|> b
-init.sem b = init.bang b metalg
 
 %hint
 public export
 (.pointedCoalgStruct) :
-  (functoriality : signature.Map) =>
   (str : Strength signature) =>
   signature.Initial meta a -> type.PointedCoalgStruct a
 init.pointedCoalgStruct = MkPointedCoalgStruct
@@ -41,7 +33,6 @@ init.pointedCoalgStruct = MkPointedCoalgStruct
 %hint
 public export
 (.monStruct) :
-  (functoriality : signature.Map) =>
   (str : Strength signature) =>
   signature.Initial meta a -> type.MonStruct a
 init.monStruct = MkSubstMonoidStruct
@@ -52,7 +43,6 @@ init.monStruct = MkSubstMonoidStruct
 %hint
 public export
 (.monoidStruct) :
-  (functoriality : signature.Map) =>
   (str : Strength signature) =>
   signature.Initial meta a -> signature.MonoidStruct a
 init.monoidStruct = MkSignatureMonoid { mon = init.monStruct , alg = init.metalg.alg }

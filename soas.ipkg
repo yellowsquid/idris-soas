@@ -22,6 +22,7 @@ modules = SOAS
     , SOAS.Family
     , SOAS.Strength
     , SOAS.Structure
+    , SOAS.Syntax
     , SOAS.Theory
     , SOAS.Var
 

@@ -34,14 +34,20 @@ record (.MonStruct) (type : Type) (m : type.SortedFamily) where
   mult : m -|> (m ^ m)
 
 export
+(.wkn) :
+  (0 m : type.SortedFamily) -> (mon : type.PointedCoalgStruct m) =>
+  m sy ctx -> m sy (ctx :< (n :- ty))
+m.wkn t = mon.ren t (weakl {length = S Z})
+
+export
 (.sub) :
-  (mon : type.MonStruct m) ->
+  (0 m : type.SortedFamily) -> (mon : type.MonStruct m) =>
   m sy (ctx :< (n :- ty)) -> m ty ctx -> m sy ctx
-mon.sub t s = mon.mult t (m.extend s mon.var)
+m.sub t s = mon.mult t (m.extend s mon.var)
 
 export
 (.sub2) :
-  (mon : type.MonStruct m) ->
+  (0 m : type.SortedFamily) -> (mon : type.MonStruct m) =>
   m sy (ctx :< (x :- ty1) :< (x :- ty2)) ->
   m ty1 ctx ->  m ty2 ctx -> m sy ctx
-mon.sub2 t s1 s2 = mon.mult t (m.extend s2 (m.extend s1 mon.var))
+m.sub2 t s1 s2 = mon.mult t (m.extend s2 (m.extend s1 mon.var))

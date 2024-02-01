@@ -5,6 +5,7 @@ import public SOAS.Context
 import public SOAS.Family
 import public SOAS.Strength
 import public SOAS.Structure
+import public SOAS.Syntax
 import public SOAS.Theory
 import public SOAS.Var
 
@@ -88,7 +89,3 @@ import public SOAS.Var
 -- prod : (signatures : List $ type.SortedFunctor) ->
 --   type.SortedFunctor
 -- (prod signatures) x ty ctx = All (\sig => sig x ty ctx) signatures
-
-public export
-bind : (tys : type.Ctx) -> type.SortedFunctor
-bind tys = (<<< tys)

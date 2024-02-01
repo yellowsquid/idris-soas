@@ -1,5 +1,6 @@
 module SOAS.Strength
 
+import SOAS.Context
 import SOAS.Family
 import SOAS.Structure
 import SOAS.Var
@@ -12,18 +13,10 @@ type.SortedFunctor = type.SortedFamily -> type.SortedFamily
 public export
 record Strength (f : type.SortedFunctor) where
   constructor MkStrength
-  strength :
-    (0 p,x : type.SortedFamily) ->
-    (mon : type.PointedCoalgStruct p) ->
+  str :
+    {0 p,x : type.SortedFamily} ->
+    (mon : type.PointedCoalgStruct p) =>
     (f (x ^ p)) -|> ((f x) ^ p)
-
-export
-(.str) :
-  Strength f ->
-  {0 p,x : type.SortedFamily} ->
-  (mon : type.PointedCoalgStruct p) =>
-  (f (x ^ p)) -|> ((f x) ^ p)
-strength.str {p,x,mon} = strength.strength p x mon
 
 public export
 record (.Map) (signature : type.SortedFunctor) where
@@ -31,3 +24,17 @@ record (.Map) (signature : type.SortedFunctor) where
   map :
     {0 a,b : type.SortedFamily} -> (a -|> b) ->
     signature a -|> signature b
+
+public export
+bind : (tys : type.Ctx) -> type.SortedFunctor
+bind tys = (<<< tys)
+
+public export
+record BindRename (tys : type.Ctx) (a : type.SortedFamily) (ty : type) (ctx : type.Ctx) where
+  constructor Bind
+  0 names : tys.All (\_,_ => String)
+  body : a ty (ctx ++ tys.rename names)
+
+public export
+Nil : a -|> BindRename [<] a
+[] x = Bind [<] x

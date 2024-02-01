@@ -7,7 +7,7 @@ import SOAS.Context
 import SOAS.Family
 
 prefix 4 %%
-infixr 3 ~> , ~:>
+infixr 3 ~> , ~:>, ^, ^^
 
 --------------------------------------------------------------------------------
 -- Variables
@@ -127,8 +127,12 @@ x.extend {ty} u theta = x.copair (S Z) theta (x.singleton u)
 -- Families
 
 public export 0
+(^^) : (tgt : type.Family) -> (src : type.SortedFamily) -> type.Family
+(tgt ^^ src) ctx = src.subst ctx -||> tgt
+
+public export 0
 (^) : (tgt, src : type.SortedFamily) -> type.SortedFamily
-(tgt ^ src) ty ctx = src.subst ctx -||> tgt ty
+(tgt ^ src) ty = tgt ty ^^ src
 
 public export 0
 Nil : type.SortedFamily -> type.SortedFamily
@@ -138,3 +142,11 @@ Nil f = f ^ Var
 (*) : (derivative, tangent : type.SortedFamily) -> type.SortedFamily
 (derivative * tangent) ty ctx =
   (ctx' : type.Ctx ** (derivative ty ctx' , tangent.subst ctx' ctx))
+
+--------------------------------------------------------------------------------
+-- Utilities
+
+export
+lookup : ctx.All p -> {k : Nat} -> (0 pos : ctx.varAt n k ty) -> p n ty
+lookup (sx :< px) Here = px
+lookup (sx :< px) (There v) = lookup sx v

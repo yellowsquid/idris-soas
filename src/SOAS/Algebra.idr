@@ -27,7 +27,6 @@ record (.MetaAlg)
 export
 traverse : {0 p,a : type.SortedFamily} ->
       {0 signature : type.SortedFunctor} ->
-      (functoriality : signature.Map) =>
       (str : Strength signature) =>
       (coalg : type.PointedCoalgStruct p) =>
       (alg : signature a -|> a) ->
